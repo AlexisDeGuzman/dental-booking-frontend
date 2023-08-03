@@ -13,7 +13,74 @@ const Register = () => {
     const [ isDisabled, setIsDisabled ] = useState(false);
     const [ error, setError] = useState('');
     const [ isError, setIsError] = useState(false);
-    
+
+    // Navigation
+    const navigate = useNavigate();
+
+    // Check if fields are filled
+    useEffect(() => {
+      if( email && password1 && password2 && (password1 === password2) ) {
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(true);
+      }
+    }, [ email, password1, password2 ])
+
+    // Check password match
+    useEffect (() => {
+      if (password1 !== password2 ) {
+        setIsPasswordMatch(false);
+      } else {
+        setIsPasswordMatch(true);
+      }
+    }, [ password1, password2 ])
+
+    function registerUser(event) {
+    event.preventDefault();
+
+        fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
+          method : 'POST',
+          headers : { 'Content-Type': 'application/json'},
+          body : JSON.stringify({
+            email: email,
+            password: password1
+          })
+        })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            res.text().then((message) => {
+              setIsError(true)
+              setError(message);
+            })
+          }
+        })
+        .then(data => {
+          if ( !data ) {
+            Swal2.fire({
+                title: "Register unsuccessful!",
+                icon: 'error',
+                text: 'Check your register credentials and try again'
+            })
+          } else {
+            Swal2.fire({
+                title: "Register successful!",
+                icon: 'success',
+                text: 'You may now Log In'
+            })
+            navigate('/login');
+          }
+        })
+        .catch(err => {
+          // returns from the promise res.text()
+          err.then((errorMessage) => {
+            setIsError(true)
+            setError(errorMessage);
+          })
+        })
+    };
+
     return (
         <Container>
       <Row className='mt-5 pt-3'>
