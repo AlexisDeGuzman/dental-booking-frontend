@@ -87,6 +87,8 @@ const Login = () => {
     }
 
     return (
+        !user.id 
+        ? 
         <Container>
         <Row className='mt-5 pt-3'>
             <Col xs={10} md={4} className = 'mt-5 py-5 rounded col-6 mx-auto bg-light' style={{backgroundImage: 'linear-gradient(to left, #C55FFB, #EFDCF9)'}}>
@@ -123,6 +125,9 @@ const Login = () => {
             </Col>
         </Row>
     </Container>
+
+    :
+    <Navigate to = '/*' />
     );
 };
 
