@@ -19,6 +19,7 @@ const Appointment = () => {
     const [ date, setDate ] = useState(currentDate);
     const [ time, setTime ] = useState('');
     const [selectedValue, setSelectedValue] = useState(null);
+    const [availableTime, setAvailableTime] = useState([]);
 
     // Handle date selection
     const onDateSelect = (date) => {
@@ -37,9 +38,24 @@ const Appointment = () => {
       setSelectedValue(event.target.value);
     };
 
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}/appointments/availableTime`,{
+            method : 'POST',
+            headers : { 'Content-Type' : 'application/json'},
+            body : JSON.stringify({
+                date: date
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            setAvailableTime(data);
+        })
+    },[date])
+
                               
     useEffect(()=>{
         console.log(date);
+        console.log(selectedValue);
     },[date])
 
     return (
@@ -133,43 +149,30 @@ const Appointment = () => {
         <RowBstrap className='my-3'>
             <ColBstrap>
                 <h2 className='text-center'>Available Time</h2>
-                <div>
-                    <label>
-                        <input
-                            type="radio"
-                            value="option1"
-                            checked={selectedValue === 'option1'}
-                            onChange={handleRadioChange}
-                        />
-                        Option 1
-                    </label>                        
-                </div>
-                <div>
-                    <label>
-                        <input
-                            type="radio"
-                            value="option2"
-                            checked={selectedValue === 'option2'}
-                            onChange={handleRadioChange}
-                        />
-                        Option 2
-                    </label>
-                </div>
-                <div>  
-                    <label>
-                        <input
-                            type="radio"
-                            value="option3"
-                            checked={selectedValue === 'option3'}
-                            onChange={handleRadioChange}
-                        />
-                        Option 3
-                    </label>
-                </div>
+                {!time && <p>No Available Schedule</p>}
+                {
+                    Array.isArray(availableTime) && availableTime.length > 0 
+                    ?
+                    availableTime.map(appointment => (
+                        <div key={appointment.id}>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value={appointment.time}
+                                    checked={selectedValue === appointment.time}
+                                    onChange={handleRadioChange}
+                                />
+                                {appointment.time}
+                            </label>                        
+                        </div>
+                    ))
+                    :
+                    <p>No available time slots</p>
+                }
 
                 <h3 className='text-center'>Selected schedule:</h3>
 
-                {selectedValue && <div>{`${date} ${selectedValue}`}</div>}
+                {selectedValue && <div>{`${date} ${time}`}</div>}
 
                 <Button>Book</Button>
             </ColBstrap>
