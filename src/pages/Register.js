@@ -7,6 +7,10 @@ import UserContext from '../UserContext';
 const Register = () => {
     // States
     const [ email, setEmail ] = useState('');
+    const [ firstName, setFirstName ] = useState('');
+    const [ lastName, setLastName ] = useState('');
+    const [ address, setAddress ] = useState('');
+    const [ contactNumber, setContactNumber ] = useState('');
     const [ password1, setPassword1 ] = useState('');
     const [ password2, setPassword2 ] = useState('');
     const [ isPasswordMatch, setIsPasswordMatch ] = useState(false);
@@ -98,7 +102,47 @@ const Register = () => {
                 value = {email}
                 onChange = {event => setEmail(event.target.value)}
                 />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="Enter First Name" 
+                value = {firstName}
+                onChange = {event => setFirstName(event.target.value)}
+                />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="Enter Last Name" 
+                value = {lastName}
+                onChange = {event => setLastName(event.target.value)}
+                />
             </Form.Group> 
+
+            <Form.Group className="mb-3" controlId="formAddress">
+              <Form.Label>Address</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="Enter Address" 
+                value = {address}
+                onChange = {event => setAddress(event.target.value)}
+                />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formContactNumber">
+              <Form.Label>Contact Number</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="Enter Contact Number" 
+                value = {contactNumber}
+                onChange = {event => setContactNumber(event.target.value)}
+                />
+            </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword1">
               <Form.Label>Password</Form.Label>
