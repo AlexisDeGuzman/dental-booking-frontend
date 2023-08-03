@@ -66,7 +66,7 @@ const Login = () => {
                 })
                 localStorage.setItem('token', data.access);
                 getUserId(data.access);
-                navigate('/products')
+                navigate('/appointments')
             }
         })
     }
