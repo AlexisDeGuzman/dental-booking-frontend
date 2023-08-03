@@ -46,6 +46,10 @@ const Register = () => {
           method : 'POST',
           headers : { 'Content-Type': 'application/json'},
           body : JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            contactNumber: contactNumber,
             email: email,
             password: password1
           })
@@ -85,12 +89,17 @@ const Register = () => {
         })
     };
 
+    // checker
+    useEffect(()=>{
+        console.log(contactNumber);
+    }, [contactNumber])
+
     return (
         <Container>
       <Row className='mt-5 pt-3'>
         <Col xs={10} md={4} className = "mt-5 py-3 col-6 mx-auto bg-light rounded" style={{backgroundImage: 'linear-gradient(to left, #C55FFB, #EFDCF9)'}}>
           <h1 className = "py-3 text-center">Register</h1>
-          <Form>
+          <Form onSubmit ={event => registerUser(event)}>
               
             { isError && <Form.Text className="text-danger">{error}</Form.Text> }
 
