@@ -14,9 +14,41 @@ import Logout from './pages/Logout';
 import NotFound from './pages/NotFound';
 
 function App() {
+
+  // initialize user
+  const [user, setUser] = useState({
+    id: null,
+    email: null,
+    isAdmin: null
+  });
+
+  // clear localStorage on logout
+  const unsetUser = () => {
+    localStorage.clear();
+  };
   
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/users/userDetails`,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        setUser({
+            id: data._id,
+            email: data.email,
+            isAdmin: data.isAdmin,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            address: data.address,
+            contactNumber: data.contactNumber
+        })
+    })
+  }, [])
+
   return (
-    <UserProvider>
+    <UserProvider value = {{user, setUser, unsetUser}}>
         <Router>
           <AppNavBar />
           <Container fluid style={{ padding: '0' }}>
