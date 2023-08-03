@@ -1,9 +1,11 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { NavLink, Link } from 'react-router-dom';
 import UserContext from '../UserContext';
-import { useContext, useState } from 'react'
+import { useContext, useState } from 'react';
 
 const AppNavBar = () => {
+
+  const { user } = useContext(UserContext);
 
   //states
   const [expanded, setExpanded] = useState(false);
@@ -27,14 +29,18 @@ const AppNavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav" in={expanded}>
           <Nav className="ms-auto" onClick={handleNavClick}>
                    
-            <Nav.Link 
-              as = {NavLink} 
-              to = '/'
-              className="nav-link"
-              activeclassname="active" 
-            >
-              Home
-            </Nav.Link>
+          <Nav.Link 
+            as = {NavLink} 
+            to = '/'
+            className="nav-link"
+            activeclassname="active" 
+          >
+            Home
+          </Nav.Link>
+
+          {
+            user.id
+            &&
             <Nav.Link 
               as = {NavLink} 
               to = '/appointments'
@@ -43,24 +49,36 @@ const AppNavBar = () => {
             >
               Appointments
             </Nav.Link>
-            
-                <Nav.Link 
-                  as = {NavLink} 
-                  to = '/register'
-                  className="nav-link"
-                  activeclassname="active"
-                >
-                  Register
-                </Nav.Link>
-                <Nav.Link 
-                  as = {NavLink} 
-                  to = '/login'
-                  className="nav-link"
-                  activeclassname="active"
-                >
-                  Login
-                </Nav.Link>
+          }
 
+          {
+            !user.id
+            &&
+            <>
+              
+              <Nav.Link 
+                as = {NavLink} 
+                to = '/register'
+                className="nav-link"
+                activeclassname="active"
+              >
+                Register
+              </Nav.Link>
+              <Nav.Link 
+                as = {NavLink} 
+                to = '/login'
+                className="nav-link"
+                activeclassname="active"
+              >
+                Login
+              </Nav.Link>
+            </>
+            }
+
+            {
+              user.id
+              &&
+              <>
                 <Nav.Link 
                   as = {NavLink} 
                   to = '/logout'
@@ -69,8 +87,6 @@ const AppNavBar = () => {
                 >
                   Logout
                 </Nav.Link>
-  
-                
                 <Nav.Link 
                   as={NavLink} 
                   to='/profile' 
@@ -79,6 +95,8 @@ const AppNavBar = () => {
                 >
                   Profile
                 </Nav.Link>
+              </>
+            }
           </Nav>
         </Navbar.Collapse>
         </Container>
