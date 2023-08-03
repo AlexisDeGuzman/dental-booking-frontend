@@ -22,7 +22,7 @@ const AppNavBar = () => {
       fixed="top"
     >
         <Container fluid className='mx-3'>
-        <Navbar.Brand as = {Link} to = '/' className='text-white fw-bold'>Chasing Perfection</Navbar.Brand>
+        <Navbar.Brand as = {Link} to = '/' className='text-white fw-bold'>Dental Clinic Appointment App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)}/>
         <Navbar.Collapse id="basic-navbar-nav" in={expanded}>
           <Nav className="ms-auto" onClick={handleNavClick}>
