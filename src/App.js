@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import NotFound from './pages/NotFound';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
               <Route exact path ='/register' element = {<Register/>}/>
               <Route exact path ='/login' element = {<Login/>}/>
               <Route exact path ='/logout' element = {<Logout/>}/>
+              <Route exact path ='/profile' element = {<Profile/>}/>
               <Route path = '*' element = {<NotFound />} />
             </Routes>
           </Container>
